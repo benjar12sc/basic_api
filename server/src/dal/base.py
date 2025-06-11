@@ -23,15 +23,12 @@ class BaseDAL(Generic[T]):
 
     async def create(self, obj: T) -> T:
         self.session.add(obj)
-        await self.session.commit()
-        await self.session.refresh(obj)
         return obj
 
     async def update(self, obj_id: int, updated_data: dict) -> Optional[T]:
         await self.session.execute(
             update(self.model).where(self.model.id == obj_id).values(**updated_data)
         )
-        await self.session.commit()
         return await self.get(obj_id)
 
     async def delete(self, obj_id: int) -> None:
@@ -41,6 +38,5 @@ class BaseDAL(Generic[T]):
         obj = result.scalar_one_or_none()
         if obj:
             await self.session.delete(obj)
-            await self.session.commit()
         else:
             raise ValueError(f"{self.model.__name__} with id {obj_id} does not exist.")

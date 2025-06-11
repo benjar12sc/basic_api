@@ -7,8 +7,9 @@ from config import API_PREFIX
 
 app = FastAPI()
 
-app.get("/health") 
-lambda: {"status": "ok"}
+@app.get("/health")
+def health():
+    return {"status": "ok"}
 
 app.include_router(sale.router, prefix=API_PREFIX, tags=["sales"])
 

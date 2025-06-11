@@ -16,6 +16,8 @@ class SaleBase(BaseModel):
     ItemDescription: str
     ItemType: str
     RetailSales: float
+    RetailTransfers: float
+    WarehouseSales: float
 
 class SaleCreate(SaleBase):
     pass
@@ -72,10 +74,13 @@ async def create_sale(sale: SaleCreate):
     """
     async with async_session() as session:
         async with session.begin():
-            sale_obj = SaleModel(**sale.dict())
+            sale_obj = SaleModel(**sale.model_dump())
             sale_dal = SaleDAL(session)
             created = await sale_dal.create(sale_obj)
-            return SaleRead.model_validate(created)
+        # Refresh the object after the transaction to get the auto-generated id
+        async with async_session() as session:
+            refreshed = await session.get(SaleModel, created.id)
+            return SaleRead.model_validate(refreshed)
 
 @router.put(
     "/sale/{sale_id}",
@@ -107,5 +112,8 @@ async def delete_sale(sale_id: int):
     async with async_session() as session:
         async with session.begin():
             sale_dal = SaleDAL(session)
-            await sale_dal.delete(sale_id)
+            try:
+                await sale_dal.delete(sale_id)
+            except ValueError:
+                raise HTTPException(status_code=404, detail="Sale not found")
             return {"detail": "Sale deleted"}

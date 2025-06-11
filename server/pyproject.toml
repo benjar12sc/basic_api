@@ -1,0 +1,21 @@
+[project]
+name = "fast_api_project"
+version = "0.1.0"
+description = "A FastAPI project."
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi",
+    "uvicorn[standard]",
+    "python-multipart",
+    "pydantic",
+    "sqlalchemy",
+    "aiosqlite",
+    "databases",
+    "werkzeug"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "httpx"
+]
