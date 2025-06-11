@@ -8,8 +8,8 @@ __pycache__/
 .vscode/
 
 # Data files
-/data/
-!/data/.keep
+/data/*.csv
+/data/*db
 
 # SQLite and other DB files
 *.db
