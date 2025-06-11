@@ -17,3 +17,17 @@ development in progress.
     - **model/**: SQLAlchemy models and related code.
     - **router/**: FastAPI routers for API endpoints.
     - **service/**: (Optional) Business logic/services.
+
+## TODOs
+
+- Convert to CBR (Class Based Routers) to make authorization and dependency injection easier.
+- Finish test DB initialization and destruction, and ensure it is always separate from the application DB.
+- Move Pydantic schemas out of routers and into a dedicated schemas module.
+- Add more comprehensive unit and integration tests, including for user authentication and session management.
+- Refactor DALs and routers for better separation of concerns and reusability.
+- Add proper error handling and logging throughout the backend.
+- Move configuration (API version, DB URL, etc.) to environment variables and .env files where not already done.
+- Implement user authentication and session token logic in the user router.
+- Add frontend validation and error handling for all forms.
+- Add pagination, filtering, and sorting to all list endpoints.
+- Improve Docker and deployment setup for production readiness.
