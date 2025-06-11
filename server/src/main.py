@@ -3,9 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 # from fastapi.security import OAuth2AuthorizationCodeBearer
 from router import sale
-
-API_VERSION = "v1"
-API_PREFIX = f"/api/{API_VERSION}"
+from config import API_PREFIX
 
 app = FastAPI()
 
